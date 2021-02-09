@@ -114,10 +114,12 @@ Toolkit.run(async tools => {
 
     const remoteRepo = `https://${process.env.GITHUB_ACTOR}:${process.env.GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`
     if (process.env['INPUT_SKIP-TAG'] !== 'true') {
+      console.log("Tagging")
       await tools.runInWorkspace('git', ['tag', newVersion])
       await tools.runInWorkspace('git', ['push', remoteRepo, '--follow-tags'])
       await tools.runInWorkspace('git', ['push', remoteRepo, '--tags'])
     } else {
+      console.log("Skipping Tagging")
       await tools.runInWorkspace('git', ['push', remoteRepo])
     }
   } catch (e) {
